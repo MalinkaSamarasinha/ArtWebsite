@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+    <meta charset= "UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Canvas by D</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!--navigation bar-->
+    <nav>
+        <a href="#home" class="nav-logo">The Canvas by D</a>
+        <ul class="nav-links">
+            <li><a href=#gallery>Gallery</a></li>
+            <li><a href=#about>About</a></li>
+            <li><a href=#contact>Contact</a></li>
+        </ul>
+    </nav>
+
+    <!--home-->
+    <section id="home">
+        <h1>Everyone interprets art differently and each one holds a different 
+            story...</h1>
+        <p>Original paintings inspired by textures of nature and warmth of people</p>
+        <a href=#gallery>View the work</a>
+    </section>
+
+    <!--gallery-->
+    <section id="gallery">
+        <h2>Selected artworks</h2>
+
+        <div class="gallery-grid">
+            <div class="art-card">
+                <img src="artwork/cactus.jpg" alt="Cactus at dawn">
+                <h3>Cactus at Dawn</h3>
+                <p>Acrylic - 2025</p>
+            </div>
+            <div class="art-card">
+                <img src="artwork/paddy.jpg" alt="Paddy Fields">
+                <h3>Paddy fields</h3>
+                <p>Acrylic - 2024</p>
+            </div>
+        </div>
+    </section>
+
+    <!--about-->
+    <section id="about">
+        <h2>About me</h2>
+        <p>Hello! I'm Dharsha Samarasinha, the artist behind The 
+            Canvas by D and my practice is centered on mainly watercolour
+and acrylic painting. I work across a range of media, including watercolour, pen and ink,
+pastels,and oils,allowing me to explore both versatility and depth in my work. Studying
+under several renowned Sri Lankan artists has guided my artistic journey, helping me
+build strong technical skillsand develop a personal, distinctive style that reflects my
+vision.
+        </p>
+    </section>
+
+    <!--contact-->
+    <section id="contact">
+        <h2>Get in touch</h2>
+        <p>Are you interested to know more about a piece or commission?
+            Fill in the form and I'll get back to you!</p>
+        <form action="https://formspree.io/f/xbdqkknv" method="POST">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            <label for="subject">Type of inquiry</label>
+            <select id="subject" name="subject">
+                <option value="" disabled selected>Select one</option>
+                <option>Purchase inquiry</option>
+                <option>Collaboration</option>
+                <option>General question</option>
+                <option>Commission request</option>
+            </select>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell me more..." required>
+            </textarea>
+
+            <button type="submit">Send message</button>
+        </form>
+    </section>
+    <!--footer-->
+    <p><a href="mailto:dharshasam@gmail.com">dharshasam@gmail.com</a></p>
+</body>
+</html>
