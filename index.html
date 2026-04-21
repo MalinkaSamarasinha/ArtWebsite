@@ -5,7 +5,7 @@
     <title>The Canvas by D</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -32,18 +32,36 @@
     <section id="gallery">
         <h2>Selected artworks</h2>
 
-        <div class="gallery-grid">
-            <div class="art-card">
-                <img src="artwork/cactus.jpg" alt="Cactus at dawn">
-                <h3>Cactus at Dawn</h3>
-                <p>Acrylic - 2025</p>
-            </div>
-            <div class="art-card">
-                <img src="artwork/paddy.jpg" alt="Paddy Fields">
-                <h3>Paddy fields</h3>
-                <p>Acrylic - 2024</p>
+        <div class="carousel-wrapper">
+        <button class="carousel-btn prev" aria-label="Previous">&#8592;</button>
+
+        <div class="carousel-track-container">
+            <div class="carousel-track">
+                <div class="art-card">
+                    <img src="artwork/cactus.jpg" alt="Cactus at dawn">
+                    <h3>Cactus at Dawn</h3>
+                    <p>Acrylic · 2025</p>
+                </div>
+                <div class="art-card">
+                    <img src="artwork/paddy.jpg" alt="Paddy Fields">
+                    <h3>Paddy Fields</h3>
+                    <p>Acrylic · 2024</p>
+                </div>
+                <div class="art-card">
+                    <img src="https://cdn.britannica.com/87/2087-050-8B2A01CD/Mona-Lisa-oil-wood-panel-Leonardo-da.jpg" alt="art3">
+                    <h3>Art name</h3>
+                    <p>Acrylic · 2024</p>
+                </div>
+                <div class="art-card">
+                    <img src="https://cdng.europosters.eu/pod_public/1300/227002.jpg" alt="art4">
+                    <h3>Art name</h3>
+                    <p>Acrylic · 2024</p>
+                </div>
             </div>
         </div>
+
+        <button class="carousel-btn next" aria-label="Next">&#8594;</button>
+    </div>
     </section>
 
     <!--about-->
@@ -87,5 +105,31 @@ vision.
     </section>
     <!--footer-->
     <p><a href="mailto:dharshasam@gmail.com">dharshasam@gmail.com</a></p>
+    <script>
+  const track = document.querySelector('.carousel-track');
+  const cards = document.querySelectorAll('.art-card');
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  const nextBtn = document.querySelector('.carousel-btn.next');
+
+  let index = 0;
+
+  function getCardWidth() {
+    return cards[0].offsetWidth + 24; // 24 = gap (1.5rem at 16px)
+  }
+
+  function updateCarousel() {
+    track.style.transform = `translateX(-${index * getCardWidth()}px)`;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if (index < cards.length - 1) index++;
+    updateCarousel();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (index > 0) index--;
+    updateCarousel();
+  });
+</script>
 </body>
 </html>
