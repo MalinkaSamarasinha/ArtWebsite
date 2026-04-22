@@ -32,30 +32,95 @@
     <section id="gallery">
         <h2>Selected artworks</h2>
 
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="acrylic">Acrylic</button>
+            <button class="filter-btn" data-filter="watercolour">Watercolour</button>
+            <button class="filter-btn" data-filter="oils">Oils</button>
+        </div>
+
         <div class="carousel-wrapper">
         <button class="carousel-btn prev" aria-label="Previous">&#8592;</button>
 
         <div class="carousel-track-container">
             <div class="carousel-track">
-                <div class="art-card">
-                    <img src="artwork/cactus.jpg" alt="Cactus at dawn">
+                <div class="art-card" data-medium="acrylic">
+                    <img src="artwork/cactus.jpg" alt="Cactus_at_dawn">
                     <h3>Cactus at Dawn</h3>
-                    <p>Acrylic · 2025</p>
+                    <p>Acrylic</p>
+                    <p>Size: 10 × 12 inches</p>
                 </div>
-                <div class="art-card">
-                    <img src="artwork/paddy.jpg" alt="Paddy Fields">
+                <div class="art-card" data-medium="acrylic">
+                    <img src="artwork/paddy.jpg" alt="Paddy_Fields">
                     <h3>Paddy Fields</h3>
-                    <p>Acrylic · 2024</p>
+                    <p>Acrylic</p>
+                    <p>Size: 24 × 36 inches</p>
                 </div>
-                <div class="art-card">
-                    <img src="https://cdn.britannica.com/87/2087-050-8B2A01CD/Mona-Lisa-oil-wood-panel-Leonardo-da.jpg" alt="art3">
-                    <h3>Art name</h3>
-                    <p>Acrylic · 2024</p>
+                <div class="art-card" data-medium="acrylic">
+                    <img src="artwork/serenity.jpg" alt="serenity">
+                    <h3>Serenity</h3>
+                    <p>Acrylic</p>
+                    <p>Size: 24 × 24 inches</p>
                 </div>
-                <div class="art-card">
-                    <img src="https://cdng.europosters.eu/pod_public/1300/227002.jpg" alt="art4">
-                    <h3>Art name</h3>
-                    <p>Acrylic · 2024</p>
+                <div class="art-card" data-medium="acrylic">
+                    <img src="artwork/life_among_corals.jpg" alt="life_among_corals">
+                    <h3>life among corals</h3>
+                    <p>Acrylic</p>
+                    <p>Size: 24 × 24 inches</p>
+                </div>
+                <div class="art-card" data-medium="acrylic">
+                    <img src="artwork/monarakudumbiya_and_nidikumba.jpg" alt="monarakudumbiya_and_nidikumba">
+                    <h3>Monarakudumbiya and Nidikumba</h3>
+                    <p>Acrylic</p>
+                    <p>Size: 12 × 14 inches</p>
+                </div>
+                <div class="art-card" data-medium="acrylic">
+                    <img src="artwork/moss.jpg" alt="moss">
+                    <h3>Moss</h3>
+                    <p>Acrylic</p>
+                    <p>Size: 32 × 24 inches</p>
+                </div>
+                <div class="art-card" data-medium="acrylic">
+                    <img src="artwork/the_blazing_sun.jpg" alt="the_blazing_sun">
+                    <h3>Blazing sunset</h3>
+                    <p>Acrylic</p>
+                    <p>Size: 32 × 24 inches</p>
+                </div>
+                <div class="art-card" data-medium="acrylic">
+                    <img src="artwork/the_garland_maker.jpg" alt="the_garland_maker">
+                    <h3>Garland maker</h3>
+                    <p>Acrylic</p>
+                    <p>Size: 15 × 19 inches/p>
+                </div>
+                <div class="art-card" data-medium="acrylic">
+                    <img src="artwork/the_ocean_wave.jpeg" alt="the_ocean_wave">
+                    <h3>The ocean wave</h3>
+                    <p>Acrylic</p>
+                    <p>Size: 20 × 28 inches</p>
+                </div>
+                <div class="art-card" data-medium="oils">
+                    <img src="artwork/Kandyan_dancer.jpg" alt="Kandyan_drummer">
+                    <h3>Kandyan drummer</h3>
+                    <p>Oils</p>
+                    <p>Size: 19 × 25 inches</p>
+                </div>
+                <div class="art-card" data-medium="watercolour">
+                    <img src="artwork/stilt_fishermen.jpg" alt="stilt_fishermen">
+                    <h3>Stilt fishermen</h3>
+                    <p>Watercolour</p>
+                    <p>Size: 17 × 11 inches</p>
+                </div>
+                <div class="art-card" data-medium="watercolour">
+                    <img src="artwork/the_wild_sambar_herds_in_the_horton_plains.jpg" alt="the_wild_sambar_herds_in_the_horton_plains">
+                    <h3>The wild Sambar herds in the Horton Plains</h3>
+                    <p>Watercolour</p>
+                    <p>Size: 17 × 11 inches</p>
+                </div>
+                <div class="art-card" data-medium="watercolour">
+                    <img src="artwork/the_wild_sambar_in_the_horton_plains.jpg" alt="the_wild_sambar_in_the_horton_plains">
+                    <h3>The wild Sambar in the Horton Plains</h3>
+                    <p>Watercolour</p>
+                    <p>Size: 17 × 11 inches</p>
                 </div>
             </div>
         </div>
@@ -104,7 +169,30 @@ vision.
         </form>
     </section>
 
-    <script>
+<script>
+  // ── FILTER ──
+  const filterBtns = document.querySelectorAll('.filter-btn');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.medium === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      index = 0;
+      updateCarousel();
+    });
+  });
+
+  // ── CAROUSEL ──
   const track = document.querySelector('.carousel-track');
   const cards = document.querySelectorAll('.art-card');
   const prevBtn = document.querySelector('.carousel-btn.prev');
@@ -113,7 +201,7 @@ vision.
   let index = 0;
 
   function getCardWidth() {
-    return cards[0].offsetWidth + 24; // 24 = gap (1.5rem at 16px)
+    return cards[0].offsetWidth + 24;
   }
 
   function updateCarousel() {
@@ -121,7 +209,8 @@ vision.
   }
 
   nextBtn.addEventListener('click', () => {
-    if (index < cards.length - 1) index++;
+    const visible = document.querySelectorAll('.art-card:not(.hidden)');
+    if (index < visible.length - 1) index++;
     updateCarousel();
   });
 
