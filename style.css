@@ -97,19 +97,25 @@ section a {
   font-size: 1.3rem;
 }
 
+@media (max-width: 700px) {
+  section {
+    padding: 2.5rem 1.2rem;
+  }
+}
+
 /* ── GALLERY ── */
-.carousel-wrapper{
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  margin-top:2rem;
+.carousel-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 2rem;
 }
 
-.carousel-track-container{
-  overflow:hidden;
-  flex:1;
+.carousel-track-container {
+  overflow: hidden;
+  flex: 1;
+  min-width: 0;
 }
-
 .carousel-track{
   display:flex;
   gap:1.5rem;
@@ -277,7 +283,7 @@ form button:hover {
   background: var(--italianRoast);
 }
 
-/* ── FOOTER ── */
+/*FOOTER*/
 footer {
   display: flex;
   align-items: center;
@@ -307,6 +313,19 @@ footer a,p{
 
 footer a:hover {
   color: var(--parchment);
+}
+
+@media (max-width: 700px) {
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 1.5rem;
+  }
+
+  #instagram {
+    align-self: flex-start;
+  }
 }
 
 /* ── RESPONSIVE ── */
