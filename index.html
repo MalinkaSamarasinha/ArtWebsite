@@ -132,12 +132,12 @@
     <!--about-->
     <section id="about">
         <h2>About me</h2>
-        <p>Hello! I'm Dharsha Samarasinha, the artist behind The 
-            Canvas by D and my practice is centered on mainly watercolour
+        <p>Hello! I'm Dharsha Samarasinha, the artist behind "The 
+            Canvas by D" and my practice is centered mainly on watercolour
 and acrylic painting. I work across a range of media, including watercolour, pen and ink,
-pastels,and oils,allowing me to explore both versatility and depth in my work. Studying
+pastels, and oils, allowing me to explore both versatility and depth in my work. Studying
 under several renowned Sri Lankan artists has guided my artistic journey, helping me
-build strong technical skillsand develop a personal, distinctive style that reflects my
+build strong technical skills and develop a personal, distinctive style that reflects my
 vision.
         </p>
     </section>
@@ -170,9 +170,47 @@ vision.
     </section>
 
 <script>
-  // ── FILTER ──
+  const track = document.querySelector('.carousel-track');
+  const cards = document.querySelectorAll('.art-card');
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  const nextBtn = document.querySelector('.carousel-btn.next');
   const filterBtns = document.querySelectorAll('.filter-btn');
 
+  let index = 0;
+
+  function getVisible() {
+    return [...cards].filter(c => !c.classList.contains('hidden'));
+  }
+
+  function getCardWidth() {
+    return getVisible()[0]?.offsetWidth + 24 || 0;
+  }
+
+  function updateCarousel() {
+    const visible = getVisible();
+    if (index >= visible.length) index = 0;
+    if (visible.length === 0) return;
+
+    // Calculate offset based on position of first visible card
+    const firstVisible = visible[0];
+    const trackRect = track.getBoundingClientRect();
+    const cardRect = visible[index].getBoundingClientRect();
+    const offset = visible[index].offsetLeft - firstVisible.offsetLeft;
+    track.style.transform = `translateX(-${offset}px)`;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    const visible = getVisible();
+    if (index < visible.length - 1) index++;
+    updateCarousel();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    if (index > 0) index--;
+    updateCarousel();
+  });
+
+  // FILTER
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
@@ -192,57 +230,30 @@ vision.
     });
   });
 
-  // ── CAROUSEL ──
-  const track = document.querySelector('.carousel-track');
-  const cards = document.querySelectorAll('.art-card');
-  const prevBtn = document.querySelector('.carousel-btn.prev');
-  const nextBtn = document.querySelector('.carousel-btn.next');
+  // SWIPE
+  const container = document.querySelector('.carousel-track-container');
+  let startX = 0;
+  let isDragging = false;
 
-  let index = 0;
-
-  function getCardWidth() {
-  return cards[0].offsetWidth + 24;
-}
-
-  function updateCarousel() {
-    track.style.transform = `translateX(-${index * getCardWidth()}px)`;
-  }
-
-  nextBtn.addEventListener('click', () => {
-    const visible = document.querySelectorAll('.art-card:not(.hidden)');
-    if (index < visible.length - 1) index++;
-    updateCarousel();
+  container.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
   });
 
-  prevBtn.addEventListener('click', () => {
-    if (index > 0) index--;
-    updateCarousel();
+  container.addEventListener('touchend', e => {
+    if (!isDragging) return;
+    const diff = startX - e.changedTouches[0].clientX;
+    const visible = getVisible();
+
+    if (diff > 50) {
+      if (index < visible.length - 1) index++;
+      updateCarousel();
+    } else if (diff < -50) {
+      if (index > 0) index--;
+      updateCarousel();
+    }
+    isDragging = false;
   });
-
-  // swiping
-const container = document.querySelector('.carousel-track-container');
-let startX = 0;
-let isDragging = false;
-
-container.addEventListener('touchstart', e => {
-  startX = e.touches[0].clientX;
-  isDragging = true;
-});
-
-container.addEventListener('touchend', e => {
-  if (!isDragging) return;
-  const diff = startX - e.changedTouches[0].clientX;
-  const visible = document.querySelectorAll('.art-card:not(.hidden)');
-
-  if (diff > 50) {
-    if (index < visible.length - 1) index++;
-    updateCarousel();
-  } else if (diff < -50) {
-    if (index > 0) index--;
-    updateCarousel();
-  }
-  isDragging = false;
-});
 </script>
 
 <!--footer-->
