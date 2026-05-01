@@ -117,8 +117,8 @@ section a {
 }
 
 .art-card {
-  min-width: 260px;
-  max-width: 260px;
+  min-width: min(260px, 75vw);
+  max-width: min(260px, 75vw);
   flex-shrink: 0;
 }
 
@@ -143,6 +143,18 @@ section a {
   margin: 0;
 }
 
+@media (max-width: 700px) {
+  .carousel-wrapper {
+    gap: 0.5rem;
+  }
+
+  .carousel-btn {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+} 
 .carousel-btn {
   background: var(--italianRoast);
   color: var(--camelCoat);

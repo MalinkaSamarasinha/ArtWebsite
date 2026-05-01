@@ -90,7 +90,7 @@
                     <img src="artwork/the_garland_maker.jpg" alt="the_garland_maker">
                     <h3>Garland maker</h3>
                     <p>Acrylic</p>
-                    <p>Size: 15 × 19 inches/p>
+                    <p>Size: 15 × 19 inches</p>
                 </div>
                 <div class="art-card" data-medium="acrylic">
                     <img src="artwork/the_ocean_wave.jpeg" alt="the_ocean_wave">
@@ -201,8 +201,8 @@ vision.
   let index = 0;
 
   function getCardWidth() {
-    return cards[0].offsetWidth + 24;
-  }
+  return cards[0].offsetWidth + 24;
+}
 
   function updateCarousel() {
     track.style.transform = `translateX(-${index * getCardWidth()}px)`;
@@ -218,6 +218,31 @@ vision.
     if (index > 0) index--;
     updateCarousel();
   });
+
+  // swiping
+const container = document.querySelector('.carousel-track-container');
+let startX = 0;
+let isDragging = false;
+
+container.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+  isDragging = true;
+});
+
+container.addEventListener('touchend', e => {
+  if (!isDragging) return;
+  const diff = startX - e.changedTouches[0].clientX;
+  const visible = document.querySelectorAll('.art-card:not(.hidden)');
+
+  if (diff > 50) {
+    if (index < visible.length - 1) index++;
+    updateCarousel();
+  } else if (diff < -50) {
+    if (index > 0) index--;
+    updateCarousel();
+  }
+  isDragging = false;
+});
 </script>
 
 <!--footer-->
