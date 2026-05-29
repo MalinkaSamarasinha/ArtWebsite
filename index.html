@@ -29,7 +29,7 @@
     </section>
 
     <!--gallery-->
-    <section id="gallery">
+    <section id="gallery" class="reveal">
         <h2>Selected artworks</h2>
 
         <div class="filter-bar">
@@ -44,79 +44,79 @@
 
         <div class="carousel-track-container">
             <div class="carousel-track">
-                <div class="art-card" data-medium="acrylic">
+                <div class="art-card reveal" data-medium="acrylic">
                     <img src="artwork/cactus.jpg" alt="Cactus_at_dawn">
                     <h3>Cactus at Dawn</h3>
                     <p>Acrylic</p>
                     <p>Size: 10 × 12 inches</p>
                 </div>
-                <div class="art-card" data-medium="acrylic">
+                <div class="art-card reveal" data-medium="acrylic">
                     <img src="artwork/paddy.jpg" alt="Paddy_Fields">
                     <h3>Paddy Fields</h3>
                     <p>Acrylic</p>
                     <p>Size: 24 × 36 inches</p>
                 </div>
-                <div class="art-card" data-medium="acrylic">
+                <div class="art-card reveal" data-medium="acrylic">
                     <img src="artwork/serenity.jpg" alt="serenity">
                     <h3>Serenity</h3>
                     <p>Acrylic</p>
                     <p>Size: 24 × 24 inches</p>
                 </div>
-                <div class="art-card" data-medium="acrylic">
+                <div class="art-card reveal" data-medium="acrylic">
                     <img src="artwork/life_among_corals.jpg" alt="life_among_corals">
                     <h3>life among corals</h3>
                     <p>Acrylic</p>
                     <p>Size: 24 × 24 inches</p>
                 </div>
-                <div class="art-card" data-medium="acrylic">
+                <div class="art-card reveal" data-medium="acrylic">
                     <img src="artwork/monarakudumbiya_and_nidikumba.jpg" alt="monarakudumbiya_and_nidikumba">
                     <h3>Monarakudumbiya and Nidikumba</h3>
                     <p>Acrylic</p>
                     <p>Size: 12 × 14 inches</p>
                 </div>
-                <div class="art-card" data-medium="acrylic">
+                <div class="art-card reveal" data-medium="acrylic">
                     <img src="artwork/moss.jpg" alt="moss">
                     <h3>Moss</h3>
                     <p>Acrylic</p>
                     <p>Size: 32 × 24 inches</p>
                 </div>
-                <div class="art-card" data-medium="acrylic">
+                <div class="art-card reveal" data-medium="acrylic">
                     <img src="artwork/the_blazing_sun.jpg" alt="the_blazing_sun">
                     <h3>Blazing sunset</h3>
                     <p>Acrylic</p>
                     <p>Size: 32 × 24 inches</p>
                 </div>
-                <div class="art-card" data-medium="acrylic">
+                <div class="art-card reveal" data-medium="acrylic">
                     <img src="artwork/the_garland_maker.jpg" alt="the_garland_maker">
                     <h3>Garland maker</h3>
                     <p>Acrylic</p>
                     <p>Size: 15 × 19 inches</p>
                 </div>
-                <div class="art-card" data-medium="acrylic">
+                <div class="art-card reveal" data-medium="acrylic">
                     <img src="artwork/the_ocean_wave.jpeg" alt="the_ocean_wave">
                     <h3>The ocean wave</h3>
                     <p>Acrylic</p>
                     <p>Size: 20 × 28 inches</p>
                 </div>
-                <div class="art-card" data-medium="oils">
+                <div class="art-card reveal" data-medium="oils">
                     <img src="artwork/Kandyan_dancer.jpg" alt="Kandyan_drummer">
                     <h3>Kandyan drummer</h3>
                     <p>Oils</p>
                     <p>Size: 19 × 25 inches</p>
                 </div>
-                <div class="art-card" data-medium="watercolour">
+                <div class="art-card reveal" data-medium="watercolour">
                     <img src="artwork/stilt_fishermen.jpg" alt="stilt_fishermen">
                     <h3>Stilt fishermen</h3>
                     <p>Watercolour</p>
                     <p>Size: 17 × 11 inches</p>
                 </div>
-                <div class="art-card" data-medium="watercolour">
+                <div class="art-card reveal" data-medium="watercolour">
                     <img src="artwork/the_wild_sambar_herds_in_the_horton_plains.jpg" alt="the_wild_sambar_herds_in_the_horton_plains">
                     <h3>The wild Sambar herds in the Horton Plains</h3>
                     <p>Watercolour</p>
                     <p>Size: 17 × 11 inches</p>
                 </div>
-                <div class="art-card" data-medium="watercolour">
+                <div class="art-card reveal" data-medium="watercolour">
                     <img src="artwork/the_wild_sambar_in_the_horton_plains.jpg" alt="the_wild_sambar_in_the_horton_plains">
                     <h3>The wild Sambar in the Horton Plains</h3>
                     <p>Watercolour</p>
@@ -130,7 +130,7 @@
     </section>
 
     <!--about-->
-    <section id="about">
+    <section id="about" class="reveal">
         <h2>About me</h2>
         <p>Hello! I'm Dharsha Samarasinha, the artist behind "The 
             Canvas by D" and my practice is centered mainly on watercolour
@@ -143,7 +143,7 @@ vision.
     </section>
 
     <!--contact-->
-    <section id="contact">
+    <section id="contact" class="reveal">
         <h2>Get in touch</h2>
         <p>Are you interested to know more about a piece or commission?
             Fill in the form and I'll get back to you!</p>
@@ -168,6 +168,21 @@ vision.
             <button type="submit">Send message</button>
         </form>
     </section>
+
+<!--lightbox-->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Artwork viewer">
+    <button id="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-nav" id="lightbox-prev" aria-label="Previous artwork">&#8592;</button>
+    <div id="lightbox-content">
+        <img id="lightbox-img" src="" alt="">
+        <div id="lightbox-info">
+            <h3 id="lightbox-title"></h3>
+            <p id="lightbox-medium"></p>
+            <p id="lightbox-size"></p>
+        </div>
+    </div>
+    <button class="lightbox-nav" id="lightbox-next" aria-label="Next artwork">&#8594;</button>
+</div>
 
 <script>
   const track = document.querySelector('.carousel-track');
@@ -230,7 +245,64 @@ vision.
     });
   });
 
-  // SWIPE
+  // LIGHTBOX
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  const lbTitle = document.getElementById('lightbox-title');
+  const lbMedium = document.getElementById('lightbox-medium');
+  const lbSize = document.getElementById('lightbox-size');
+  const lbClose = document.getElementById('lightbox-close');
+  const lbPrev = document.getElementById('lightbox-prev');
+  const lbNext = document.getElementById('lightbox-next');
+  let lbIndex = 0;
+
+  function getLbVisible() {
+    return [...cards].filter(c => !c.classList.contains('hidden'));
+  }
+
+  function openLightbox(i) {
+    const visible = getLbVisible();
+    lbIndex = i;
+    const card = visible[lbIndex];
+    const img = card.querySelector('img');
+    const ps = card.querySelectorAll('p');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbTitle.textContent = card.querySelector('h3').textContent;
+    lbMedium.textContent = ps[0]?.textContent || '';
+    lbSize.textContent = ps[1]?.textContent || '';
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    lbPrev.style.visibility = lbIndex > 0 ? 'visible' : 'hidden';
+    lbNext.style.visibility = lbIndex < visible.length - 1 ? 'visible' : 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  cards.forEach((card, i) => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+      const visible = getLbVisible();
+      const vi = visible.indexOf(card);
+      if (vi !== -1) openLightbox(vi);
+    });
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+  lbPrev.addEventListener('click', e => { e.stopPropagation(); if (lbIndex > 0) openLightbox(lbIndex - 1); });
+  lbNext.addEventListener('click', e => { e.stopPropagation(); const v = getLbVisible(); if (lbIndex < v.length - 1) openLightbox(lbIndex + 1); });
+
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft' && lbIndex > 0) openLightbox(lbIndex - 1);
+    if (e.key === 'ArrowRight') { const v = getLbVisible(); if (lbIndex < v.length - 1) openLightbox(lbIndex + 1); }
+  });
   const container = document.querySelector('.carousel-track-container');
   let startX = 0;
   let isDragging = false;
@@ -254,6 +326,24 @@ vision.
     }
     isDragging = false;
   });
+
+  /* ── SCROLL REVEAL ── */
+const reveals = document.querySelectorAll('.reveal');
+
+function revealOnScroll() {
+  const triggerBottom = window.innerHeight * 0.88;
+
+  reveals.forEach(el => {
+    const rect = el.getBoundingClientRect();
+
+    if (rect.top < triggerBottom) {
+      el.classList.add('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('load', revealOnScroll);
 </script>
 
 <!--footer-->
