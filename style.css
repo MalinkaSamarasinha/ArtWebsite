@@ -28,6 +28,7 @@ body {
   font-family: var(--serif);
   font-size: 1rem;
   line-height: 1.7;
+  transition: background-color 0.8s ease;
 }
 
 /* ── NAV ── */
@@ -37,7 +38,11 @@ nav {
   align-items: center;
   padding: 1.2rem 2rem;
   background: var(--italianRoast);
-  border-bottom: 1px solid var(--camelCoat);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
 }
 
 .nav-logo {
@@ -95,6 +100,29 @@ section p {
 section a {
   color: var(--rubine);
   font-size: 1.3rem;
+}
+
+.scroll-arrow {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--camelCoat);
+  font-size: 2rem;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  animation: bounceArrow 1.5s ease-in-out infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.scroll-arrow.hidden {
+  opacity: 0;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(8px); }
 }
 
 @media (max-width: 700px) {
@@ -452,25 +480,61 @@ footer a:hover {
 }
 
 /*Aniamtion for hero text */
+#home {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 5rem 2rem 4rem;
+  max-width: 100%;
+  background-image: url('artwork/paddy.jpg'); /* ← swap filename here */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding-top: calc(130px + 3rem);
+}
+
+#home::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 12, 8, 0.15) 0%,
+    rgba(26, 12, 8, 0.65) 70%,
+    rgba(26, 12, 8, 0.85) 100%
+  );
+  pointer-events: none;
+}
+
+#home h1,
+#home p,
+#home a {
+  position: relative;
+  z-index: 1;
+}
+
 #home h1 {
+  color: var(--parchment);
   opacity: 0;
   transform: translateY(40px);
   filter: blur(8px);
   animation: heroFade 1.3s ease forwards;
 }
 
-#home p,
-#home a {
+#home p {
+  color: var(--camelCoat);
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUp 1s ease forwards;
-}
-
-#home p {
   animation-delay: 0.8s;
 }
 
 #home a {
+  color: var(--camelCoat);
+  opacity: 0;
+  transform: translateY(20px);
   animation-delay: 1.2s;
 }
 

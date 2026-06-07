@@ -12,7 +12,7 @@
     
     <!--navigation bar-->
     <nav>
-        <a href="#home" class="nav-logo"><img src="logo.png" height="130"></a>
+        <a href="#home" class="nav-logo"><img src="logo.png" height="100"></a>
         <ul class="nav-links">
             <li><a href=#gallery>Gallery</a></li>
             <li><a href=#about>About</a></li>
@@ -26,6 +26,7 @@
             story...</h1>
         <p>Original paintings inspired by textures of nature and warmth of people</p>
         <a href=#gallery>View the work</a>
+        <div class="scroll-arrow" id="scrollArrow">&#8595;</div>
     </section>
 
     <!--gallery-->
@@ -50,6 +51,14 @@
                     <p>Acrylic</p>
                     <p>Size: 10 × 12 inches</p>
                 </div>
+
+                <div class="art-card reveal" data-medium="acrylic">
+                    <img src="artwork/Firefly.jpeg" alt="Fireflies">
+                    <h3>The dance of the dragonflies</h3>
+                    <p>Acrylic</p>
+                    <p>Size: 35 × 23 inches</p>
+                </div>
+                
                 <div class="art-card reveal" data-medium="acrylic">
                     <img src="artwork/paddy.jpg" alt="Paddy_Fields">
                     <h3>Paddy Fields</h3>
@@ -115,6 +124,12 @@
                     <h3>The wild Sambar herds in the Horton Plains</h3>
                     <p>Watercolour</p>
                     <p>Size: 17 × 11 inches</p>
+                </div>
+                <div class="art-card reveal" data-medium="watercolour">
+                    <img src="artwork/hearth.jpeg" alt="hearth">
+                    <h3>Breath of the hearth</h3>
+                    <p>Watercolour</p>
+                    <p>Size: 16 × 11 inches</p>
                 </div>
                 <div class="art-card reveal" data-medium="watercolour">
                     <img src="artwork/the_wild_sambar_in_the_horton_plains.jpg" alt="the_wild_sambar_in_the_horton_plains">
@@ -244,6 +259,14 @@ vision.
       updateCarousel();
     });
   });
+  const scrollArrow = document.getElementById('scrollArrow');
+  window.addEventListener('scroll', () => {
+  if (window.scrollY > 80) {
+    scrollArrow.classList.add('hidden');
+  } else {
+    scrollArrow.classList.remove('hidden');
+  }
+});
 
   // LIGHTBOX
   const lightbox = document.getElementById('lightbox');
@@ -344,6 +367,25 @@ function revealOnScroll() {
 
 window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
+
+const sections = [
+  { id: 'gallery', color: '#f5e9d4' },
+  { id: 'about',   color: '#ede0cc' },
+  { id: 'contact', color: '#e8d5b7' },
+];
+
+function updateBgOnScroll() {
+  const scrollMid = window.scrollY + window.innerHeight / 2;
+  let current = sections[0];
+  sections.forEach(s => {
+    const el = document.getElementById(s.id);
+    if (el && el.offsetTop <= scrollMid) current = s;
+  });
+  document.body.style.backgroundColor = current.color;
+}
+
+window.addEventListener('scroll', updateBgOnScroll);
+window.addEventListener('load', updateBgOnScroll);
 </script>
 
 <!--footer-->
@@ -360,6 +402,5 @@ window.addEventListener('load', revealOnScroll);
     </a>
     </div>
 </footer>
-
 </body>
 </html>
