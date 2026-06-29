@@ -1,0 +1,13 @@
+{
+  "name": "art-website",
+  "version": "1.0.0",
+  "description": "The Canvas by D - Art portfolio website",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'No build step required for static site'"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1"
+  }
+}
