@@ -142,14 +142,6 @@ db.serialize(() => {
     )
   `);
 
-  // Migration: add 'surface' (Canvas/Paper) and 'framed' (Framed/Unframed) to existing databases
-  db.all("PRAGMA table_info(artworks)", (err, cols) => {
-    if (err) return console.error('Migration check failed:', err);
-    const have = cols.map((c) => c.name);
-    if (!have.includes('surface')) db.run('ALTER TABLE artworks ADD COLUMN surface TEXT');
-    if (!have.includes('framed')) db.run('ALTER TABLE artworks ADD COLUMN framed TEXT');
-  });
-
   // Seed data if database table is empty
   db.get("SELECT COUNT(*) AS count FROM artworks", (err, row) => {
     if (row && row.count === 0) {
@@ -216,59 +208,25 @@ app.post('/api/admin/logout', (req, res) => {
 
 // Upload New Artwork (Admin only)
 const ALLOWED_MEDIUMS = ['Acrylic', 'Watercolour', 'Oils'];
-const ALLOWED_SURFACES = ['Canvas', 'Paper'];
-const ALLOWED_FRAMING = ['Framed', 'Unframed'];
-
-// Optional enum field: '' / missing -> null, valid value -> value, anything else -> undefined (invalid)
-function optionalEnum(value, allowed) {
-  if (value === undefined || value === null || value === '') return null;
-  return allowed.includes(value) ? value : undefined;
-}
 
 app.post('/api/artworks', requireAdmin, (req, res) => {
   upload.single('artImage')(req, res, (uploadErr) => {
     if (uploadErr) return res.status(400).json({ error: uploadErr.message });
 
     const { title, medium, description } = req.body;
-    const surface = optionalEnum(req.body.surface, ALLOWED_SURFACES);
-    const framed = optionalEnum(req.body.framed, ALLOWED_FRAMING);
     const discard = () => { if (req.file) fs.unlink(req.file.path, () => {}); };
 
     if (!req.file) return res.status(400).json({ error: 'Art image is required.' });
     if (!title || !title.trim()) { discard(); return res.status(400).json({ error: 'Title is required.' }); }
     if (!ALLOWED_MEDIUMS.includes(medium)) { discard(); return res.status(400).json({ error: 'Invalid medium.' }); }
-    if (surface === undefined) { discard(); return res.status(400).json({ error: 'Invalid surface.' }); }
-    if (framed === undefined) { discard(); return res.status(400).json({ error: 'Invalid framing option.' }); }
 
     const imageUrl = `/uploads/${req.file.filename}`;
-    const sql = 'INSERT INTO artworks (title, medium, description, image_url, surface, framed) VALUES (?, ?, ?, ?, ?, ?)';
+    const sql = 'INSERT INTO artworks (title, medium, description, image_url) VALUES (?, ?, ?, ?)';
 
-    db.run(sql, [title.trim(), medium, (description || '').trim(), imageUrl, surface, framed], function (err) {
+    db.run(sql, [title.trim(), medium, (description || '').trim(), imageUrl], function (err) {
       if (err) { discard(); return res.status(500).json({ error: err.message }); }
       res.json({ success: true, id: this.lastID, imageUrl });
     });
-  });
-});
-
-// Edit Artwork details (Admin only)
-app.put('/api/artworks/:id', requireAdmin, (req, res) => {
-  const id = Number.parseInt(req.params.id, 10);
-  if (!Number.isInteger(id)) return res.status(400).json({ error: 'Invalid id.' });
-
-  const { title, medium, description } = req.body || {};
-  const surface = optionalEnum(req.body && req.body.surface, ALLOWED_SURFACES);
-  const framed = optionalEnum(req.body && req.body.framed, ALLOWED_FRAMING);
-
-  if (typeof title !== 'string' || !title.trim()) return res.status(400).json({ error: 'Title is required.' });
-  if (!ALLOWED_MEDIUMS.includes(medium)) return res.status(400).json({ error: 'Invalid medium.' });
-  if (surface === undefined) return res.status(400).json({ error: 'Invalid surface.' });
-  if (framed === undefined) return res.status(400).json({ error: 'Invalid framing option.' });
-
-  const sql = 'UPDATE artworks SET title = ?, medium = ?, description = ?, surface = ?, framed = ? WHERE id = ?';
-  db.run(sql, [title.trim(), medium, String(description || '').trim(), surface, framed, id], function (err) {
-    if (err) return res.status(500).json({ error: err.message });
-    if (this.changes === 0) return res.status(404).json({ error: 'Artwork not found.' });
-    res.json({ success: true });
   });
 });
 
