@@ -24,19 +24,6 @@
     .animate-float {
       animation: float 6s ease-in-out infinite;
     }
-
-    /* Subtle drifting "watercolour wash" background (sits behind all content) */
-    .bg-art { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-    .bg-art span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .32; will-change: transform; }
-    .bg-art span:nth-child(1) { width: 46vmax; height: 46vmax; background: #ffd8d8; top: -12vmax; left: -10vmax; animation: drift1 40s ease-in-out infinite alternate; }
-    .bg-art span:nth-child(2) { width: 40vmax; height: 40vmax; background: #ffd5b8; bottom: -14vmax; right: -8vmax; animation: drift2 48s ease-in-out infinite alternate; }
-    .bg-art span:nth-child(3) { width: 34vmax; height: 34vmax; background: #f4fec2; top: 35vh; left: 38vw; opacity: .22; animation: drift3 56s ease-in-out infinite alternate; }
-    @keyframes drift1 { to { transform: translate(22vw, 18vh) scale(1.18); } }
-    @keyframes drift2 { to { transform: translate(-24vw, -16vh) scale(1.12); } }
-    @keyframes drift3 { to { transform: translate(-18vw, 14vh) scale(0.85); } }
-    @media (prefers-reduced-motion: reduce) {
-      .bg-art span, .animate-float { animation: none; }
-    }
   </style>
 
   <script>
@@ -63,9 +50,6 @@
 </head>
 <body class="bg-brand-50 text-brand-800 font-sans antialiased selection:bg-brand-accent selection:text-white">
 
-  <!-- Animated background -->
-  <div class="bg-art" aria-hidden="true"><span></span><span></span><span></span></div>
-
   <!-- Navigation -->
   <nav class="fixed top-0 left-0 w-full bg-brand-50/95 backdrop-blur-md z-40 border-b border-brand-100 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 py-2 md:py-3 flex justify-between items-center">
@@ -89,7 +73,7 @@
   </nav>
 
   <!-- Hero Section with Ambient Floating Animation -->
-  <header class="min-h-screen flex items-center justify-center pt-32 md:pt-36 px-6 bg-gradient-to-b from-brand-100/40 to-transparent">
+  <header class="min-h-screen flex items-center justify-center pt-32 md:pt-36 px-6 bg-gradient-to-b from-brand-100/50 to-brand-50">
     <div class="max-w-4xl text-center space-y-6">
       <p class="text-xs uppercase tracking-[0.3em] text-brand-accent font-semibold">Fine Art & Originals</p>
       
@@ -231,26 +215,8 @@
           </select>
         </div>
         <div>
-          <label class="block text-xs uppercase tracking-wider text-stone-600 mb-1">Size (e.g. 24 × 36 inches)</label>
+          <label class="block text-xs uppercase tracking-wider text-stone-600 mb-1">Size (e.g. Size: 24 × 36 inches)</label>
           <input type="text" id="artDescription" class="w-full px-3 py-2 border text-sm">
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs uppercase tracking-wider text-stone-600 mb-1">Surface</label>
-            <select id="artSurface" class="w-full px-3 py-2 border text-sm">
-              <option value="">Not specified</option>
-              <option value="Canvas">Canvas</option>
-              <option value="Paper">Paper</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs uppercase tracking-wider text-stone-600 mb-1">Framing</label>
-            <select id="artFramed" class="w-full px-3 py-2 border text-sm">
-              <option value="">Not specified</option>
-              <option value="Framed">Framed</option>
-              <option value="Unframed">Unframed</option>
-            </select>
-          </div>
         </div>
         <div>
           <label class="block text-xs uppercase tracking-wider text-stone-600 mb-1">Artwork Image</label>
@@ -264,92 +230,10 @@
     </div>
   </div>
 
-  <!-- Artwork Detail / Full-size View -->
-  <div id="detailModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-3 md:p-6" onclick="if (event.target === this) closeDetail()">
-    <div class="bg-white w-full max-w-6xl max-h-[94vh] flex flex-col md:flex-row overflow-y-auto md:overflow-hidden shadow-2xl relative">
-      <button onclick="closeDetail()" class="absolute top-2 right-3 z-10 text-3xl leading-none text-stone-300 md:text-stone-400 hover:text-white md:hover:text-black" aria-label="Close">&times;</button>
-
-      <!-- Image side -->
-      <div class="relative bg-stone-900 flex items-center justify-center shrink-0 md:shrink md:flex-1 md:min-h-0">
-        <img id="detailImg" src="" alt="" class="max-w-full max-h-[55vh] md:max-h-[90vh] object-contain">
-        <button id="prevBtn" onclick="stepDetail(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/30 hover:bg-black/50 w-10 h-10 text-2xl leading-none" aria-label="Previous artwork">&#8249;</button>
-        <button id="nextBtn" onclick="stepDetail(1)" class="absolute right-2 top-1/2 -translate-y-1/2 text-white/70 hover:text-white bg-black/30 hover:bg-black/50 w-10 h-10 text-2xl leading-none" aria-label="Next artwork">&#8250;</button>
-      </div>
-
-      <!-- Details side -->
-      <div class="md:w-80 shrink-0 p-6 md:p-8 md:overflow-y-auto space-y-4">
-        <span id="detailMedium" class="text-[10px] uppercase tracking-widest text-brand-accent font-semibold"></span>
-        <h3 id="detailTitle" class="font-serif text-3xl text-brand-900 leading-tight"></h3>
-        <div class="w-10 h-[1px] bg-brand-accent"></div>
-        <dl id="detailList" class="space-y-3 text-sm"></dl>
-        <a id="detailFull" href="#" target="_blank" rel="noopener" class="inline-block text-xs uppercase tracking-widest text-brand-900 border-b border-brand-accent hover:text-brand-accent transition">View full size &#8599;</a>
-        <div id="detailAdmin" class="hidden pt-4 border-t border-brand-100 gap-2">
-          <button onclick="openEdit(detailId)" class="text-xs uppercase tracking-widest border border-brand-800/30 px-3 py-1.5 hover:bg-brand-900 hover:text-white transition">Edit details</button>
-          <button onclick="deleteArtwork(detailId)" class="text-xs uppercase tracking-widest bg-red-600 text-white px-3 py-1.5 hover:bg-red-700 transition">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Admin Edit Modal -->
-  <div id="editModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center hidden px-4">
-    <div class="bg-white max-w-md w-full p-8 shadow-2xl relative max-h-[94vh] overflow-y-auto">
-      <button onclick="closeEdit()" class="absolute top-4 right-4 text-stone-400 hover:text-black" aria-label="Close">&times;</button>
-      <h3 class="font-serif text-2xl text-brand-900 mb-4">Edit Artwork</h3>
-      <form id="editForm" onsubmit="handleEditSubmit(event)" class="space-y-4">
-        <input type="hidden" id="editId">
-        <div>
-          <label class="block text-xs uppercase tracking-wider text-stone-600 mb-1">Title</label>
-          <input type="text" id="editTitle" required class="w-full px-3 py-2 border text-sm">
-        </div>
-        <div>
-          <label class="block text-xs uppercase tracking-wider text-stone-600 mb-1">Medium</label>
-          <select id="editMedium" required class="w-full px-3 py-2 border text-sm">
-            <option value="Acrylic">Acrylic</option>
-            <option value="Watercolour">Watercolour</option>
-            <option value="Oils">Oils</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-xs uppercase tracking-wider text-stone-600 mb-1">Size (e.g. 24 × 36 inches)</label>
-          <input type="text" id="editSize" class="w-full px-3 py-2 border text-sm">
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs uppercase tracking-wider text-stone-600 mb-1">Surface</label>
-            <select id="editSurface" class="w-full px-3 py-2 border text-sm">
-              <option value="">Not specified</option>
-              <option value="Canvas">Canvas</option>
-              <option value="Paper">Paper</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs uppercase tracking-wider text-stone-600 mb-1">Framing</label>
-            <select id="editFramed" class="w-full px-3 py-2 border text-sm">
-              <option value="">Not specified</option>
-              <option value="Framed">Framed</option>
-              <option value="Unframed">Unframed</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit" class="w-full bg-brand-900 text-white text-xs uppercase tracking-widest py-3 hover:bg-brand-accent transition">Save changes</button>
-        <p id="editError" class="text-xs text-red-600 hidden"></p>
-      </form>
-    </div>
-  </div>
-
   <!-- JavaScript Application Logic -->
   <script>
     let currentMedium = 'all';
     let isAdmin = false;
-    let artworks = [];
-    let detailId = null;
-
-    // "Size: 24 × 36 inches" is stored with its prefix; show/edit it without it
-    const stripSize = v => String(v || '').replace(/^\s*size:\s*/i, '').trim();
-    const normSize = v => { const t = String(v || '').trim(); return t ? 'Size: ' + stripSize(t) : ''; };
-    // Seed data uses "Oil"; the dropdowns use "Oils"
-    const normMedium = m => { const l = String(m || '').toLowerCase(); return l.startsWith('oil') ? 'Oils' : l.startsWith('water') ? 'Watercolour' : 'Acrylic'; };
 
     // Escape text before putting it into innerHTML (prevents script injection via titles etc.)
     function esc(value) {
@@ -413,12 +297,7 @@
       try {
         const res = await fetch(`/api/artworks?medium=${encodeURIComponent(currentMedium)}`);
         if (!res.ok) throw new Error('Server error');
-        artworks = await res.json();
-        renderGallery(artworks);
-        // keep an open detail view in sync after edits / deletes
-        if (detailId !== null) {
-          if (artworks.some(a => a.id === detailId)) renderDetail(); else closeDetail();
-        }
+        renderGallery(await res.json());
       } catch (err) {
         console.error('Error fetching artworks:', err);
         document.getElementById('artGrid').innerHTML = `<p class="col-span-full text-center text-stone-400 text-sm py-12">Couldn't load artworks right now. Please refresh and try again.</p>`;
@@ -434,13 +313,10 @@
       }
 
       grid.innerHTML = artworks.map(art => `
-        <div onclick="openDetail(${Number(art.id)})" class="group bg-white p-4 shadow-sm border border-brand-100 hover:shadow-md transition duration-300 cursor-pointer">
+        <div class="group bg-white p-4 shadow-sm border border-brand-100 hover:shadow-md transition duration-300">
           <div class="aspect-square overflow-hidden bg-stone-100 mb-4 relative">
             <img src="${esc(art.image_url)}" alt="${esc(art.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            ${isAdmin ? `<div class="absolute top-2 right-2 flex gap-1">
-              <button onclick="event.stopPropagation(); openEdit(${Number(art.id)})" class="bg-brand-900 text-white text-[10px] uppercase px-2 py-1">Edit</button>
-              <button onclick="event.stopPropagation(); deleteArtwork(${Number(art.id)})" class="bg-red-600 text-white text-[10px] uppercase px-2 py-1">Delete</button>
-            </div>` : ''}
+            ${isAdmin ? `<button onclick="deleteArtwork(${Number(art.id)})" class="absolute top-2 right-2 bg-red-600 text-white text-[10px] uppercase px-2 py-1">Delete</button>` : ''}
           </div>
           <span class="text-[10px] uppercase tracking-widest text-brand-accent font-semibold">${esc(art.medium)}</span>
           <h3 class="font-serif text-2xl text-brand-900 mt-1">${esc(art.title)}</h3>
@@ -499,9 +375,7 @@
       const formData = new FormData();
       formData.append('title', document.getElementById('artTitle').value);
       formData.append('medium', document.getElementById('artMedium').value);
-      formData.append('description', normSize(document.getElementById('artDescription').value));
-      formData.append('surface', document.getElementById('artSurface').value);
-      formData.append('framed', document.getElementById('artFramed').value);
+      formData.append('description', document.getElementById('artDescription').value);
       formData.append('artImage', document.getElementById('artImage').files[0]);
 
       const err = document.getElementById('uploadError');
@@ -532,120 +406,6 @@
         fetchArtworks();
       }
     }
-
-    // ---- Detail view ----
-    function openDetail(id) {
-      detailId = id;
-      renderDetail();
-      document.getElementById('detailModal').classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function renderDetail() {
-      const i = artworks.findIndex(a => a.id === detailId);
-      if (i < 0) return;
-      const art = artworks[i];
-      const img = document.getElementById('detailImg');
-      img.src = art.image_url;
-      img.alt = art.title;
-      document.getElementById('detailMedium').textContent = art.medium;
-      document.getElementById('detailTitle').textContent = art.title;
-      const full = document.getElementById('detailFull');
-      full.href = art.image_url;
-
-      const rows = [
-        ['Medium', normMedium(art.medium) === 'Oils' ? 'Oil' : art.medium],
-        ['Size', stripSize(art.description)],
-        ['Surface', art.surface ? 'On ' + art.surface.toLowerCase() : ''],
-        ['Framing', art.framed || '']
-      ].filter(r => r[1]);
-      document.getElementById('detailList').innerHTML = rows.map(([k, v]) => `
-        <div class="flex justify-between gap-4 border-b border-brand-100 pb-2">
-          <dt class="text-xs uppercase tracking-wider text-stone-500">${esc(k)}</dt>
-          <dd class="text-brand-900 text-right">${esc(v)}</dd>
-        </div>`).join('');
-
-      const multi = artworks.length > 1;
-      document.getElementById('prevBtn').classList.toggle('hidden', !multi);
-      document.getElementById('nextBtn').classList.toggle('hidden', !multi);
-      const adminBox = document.getElementById('detailAdmin');
-      adminBox.classList.toggle('hidden', !isAdmin);
-      adminBox.classList.toggle('flex', isAdmin);
-    }
-
-    function stepDetail(dir) {
-      const i = artworks.findIndex(a => a.id === detailId);
-      if (i < 0) return;
-      detailId = artworks[(i + dir + artworks.length) % artworks.length].id;
-      renderDetail();
-    }
-
-    function closeDetail() {
-      detailId = null;
-      document.getElementById('detailModal').classList.add('hidden');
-      document.getElementById('detailImg').src = '';
-      document.body.style.overflow = '';
-    }
-
-    // ---- Edit (admin) ----
-    function openEdit(id) {
-      const art = artworks.find(a => a.id === id);
-      if (!art) return;
-      document.getElementById('editId').value = art.id;
-      document.getElementById('editTitle').value = art.title;
-      document.getElementById('editMedium').value = normMedium(art.medium);
-      document.getElementById('editSize').value = stripSize(art.description);
-      document.getElementById('editSurface').value = art.surface || '';
-      document.getElementById('editFramed').value = art.framed || '';
-      document.getElementById('editError').classList.add('hidden');
-      document.getElementById('editModal').classList.remove('hidden');
-    }
-
-    function closeEdit() {
-      document.getElementById('editModal').classList.add('hidden');
-    }
-
-    async function handleEditSubmit(e) {
-      e.preventDefault();
-      const err = document.getElementById('editError');
-      err.classList.add('hidden');
-      const id = document.getElementById('editId').value;
-      try {
-        const res = await fetch(`/api/artworks/${id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: document.getElementById('editTitle').value,
-            medium: document.getElementById('editMedium').value,
-            description: normSize(document.getElementById('editSize').value),
-            surface: document.getElementById('editSurface').value,
-            framed: document.getElementById('editFramed').value
-          })
-        });
-        const data = await res.json().catch(() => ({}));
-        if (res.status === 401) { await checkAdmin(); fetchArtworks(); throw new Error('Your session expired. Please log in again at /admin.'); }
-        if (!res.ok) throw new Error(data.error || 'Could not save changes.');
-        closeEdit();
-        fetchArtworks();
-      } catch (ex) {
-        err.textContent = ex.message;
-        err.classList.remove('hidden');
-      }
-    }
-
-    // Keyboard: Esc closes the top-most dialog, arrows browse artworks
-    document.addEventListener('keydown', (e) => {
-      const open = id => !document.getElementById(id).classList.contains('hidden');
-      if (e.key === 'Escape') {
-        if (open('editModal')) closeEdit();
-        else if (open('detailModal')) closeDetail();
-        else if (open('adminModal')) toggleAdminModal(false);
-        else if (open('loginModal')) closeLogin();
-      } else if (open('detailModal') && !open('editModal')) {
-        if (e.key === 'ArrowLeft') stepDetail(-1);
-        if (e.key === 'ArrowRight') stepDetail(1);
-      }
-    });
 
     function toggleAdminModal(show) {
       document.getElementById('adminModal').classList.toggle('hidden', !show);
