@@ -2,13 +2,17 @@
   "name": "the-canvas-by-d",
   "version": "1.0.0",
   "description": "Sleek portfolio website for The Canvas by D",
-  "main": "server.js",
+  "main": "local.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node local.js"
   },
   "dependencies": {
+    "@libsql/client": "^0.18.0",
+    "@vercel/blob": "^2.8.2",
     "express": "^4.18.2",
-    "multer": "^1.4.5-lts.1",
-    "sqlite3": "^5.1.6"
+    "multer": "^1.4.5-lts.1"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
